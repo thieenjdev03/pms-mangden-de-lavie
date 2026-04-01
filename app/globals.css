@@ -4,48 +4,153 @@
   --background: #f5f5f5;
   --foreground: #1f1f1f;
   /* FullCalendar — aligned with lib/theme.ts */
-  --calendar-today-bg: rgba(22, 119, 255, 0.06);
+  --calendar-day-cell-bg: #ffffff;
+  --calendar-day-number-color: #595959;
   --calendar-primary: #1677ff;
   --calendar-event-radius: 8px;
+  --calendar-card-radius: 12px;
+  --calendar-card-border: #e8e8e8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Typography — Playfair Display (headings) + Be Vietnam Pro (body) */
+  --font-heading: var(--font-playfair), ui-serif, Georgia, "Times New Roman", serif;
+  --font-body: var(--font-be-vietnam), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: var(--font-body);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Landing — Nature Healing palette (PROTECTION / coming-soon) */
+  --color-heal-primary-50: #f3f7f4;
+  --color-heal-primary-100: #e0ebe4;
+  --color-heal-primary-200: #c2d8cb;
+  --color-heal-primary-300: #9fc1ae;
+  --color-heal-primary-400: #7aa88f;
+  --color-heal-primary-500: #5f9276;
+  --color-heal-primary-600: #4a7a61;
+  --color-heal-primary-700: #3a614e;
+  --color-heal-primary-800: #2f4e40;
+  --color-heal-primary-900: #263f34;
+  --color-heal-accent: #1f4d3a;
+  --color-heal-accent-hover: #173c2d;
+  --color-heal-neutral-light: #f8faf9;
+  --color-heal-neutral-soft: #eef2f0;
+  --color-heal-text: #1a1a1a;
+  --color-heal-text-secondary: #5b6b63;
+  --color-heal-text-muted: #8a9a92;
+  --color-heal-highlight: #6b8f7b;
 }
 
 body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-be-vietnam), system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.625;
 }
 
-/* --- FullCalendar booking page (update-full-calendar spec) --- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-playfair), ui-serif, Georgia, "Times New Roman", serif;
+  line-height: 1.2;
+}
+
+/* --- FullCalendar: radius card (toolbar + grid), white cells, gray bold day numbers --- */
+
+.booking-calendar-card {
+  border-radius: var(--calendar-card-radius);
+  border: 1px solid var(--calendar-card-border);
+  overflow: hidden;
+  background: var(--calendar-day-cell-bg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Header FullCalendar (prev / next / Hôm nay / title) nằm trong card */
+.booking-calendar-card .fc-header-toolbar {
+  padding: 12px 16px;
+  margin-bottom: 0 !important;
+  border-bottom: 1px solid var(--calendar-card-border);
+  background: var(--calendar-day-cell-bg);
+  border-radius: 0;
+}
+
+.booking-calendar-card .fc-view-harness {
+  background: var(--calendar-day-cell-bg);
+}
+
+.booking-calendar-wrap {
+  background: var(--calendar-day-cell-bg);
+}
+
+.booking-calendar-wrap .fc-day-today {
+  background-color: var(--calendar-day-cell-bg) !important;
+}
+
+.booking-calendar-wrap .fc-theme-standard .fc-scrollgrid,
+.booking-calendar-wrap .fc-theme-standard .fc-scrollgrid-section,
+.booking-calendar-wrap .fc-theme-standard .fc-scrollgrid-section > td,
+.booking-calendar-wrap .fc-theme-standard .fc-scrollgrid-section-body > td {
+  background: var(--calendar-day-cell-bg) !important;
+}
+
+.booking-calendar-wrap .fc-daygrid-day,
+.booking-calendar-wrap .fc-daygrid-day-frame {
+  background-color: var(--calendar-day-cell-bg) !important;
+}
+
+.booking-calendar-wrap .fc-daygrid-day.fc-day-other,
+.booking-calendar-wrap .fc-daygrid-day.calendar-cell-today {
+  background-color: var(--calendar-day-cell-bg) !important;
+  box-shadow: none !important;
+}
+
+/* Số ngày trong từng ô (1, 2, 3…) — xám, đậm */
+.booking-calendar-wrap .fc-daygrid-day-number {
+  color: var(--calendar-day-number-color) !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  min-width: unset !important;
+  height: auto !important;
+  padding: 2px 4px !important;
+}
+
+.booking-calendar-wrap .fc-daygrid-day.fc-day-other .fc-daygrid-day-number {
+  color: #8c8c8c !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+}
+
+/* Tiêu đề cột (Thứ Hai, Thứ Ba…) — xám, đậm */
+.booking-calendar-wrap .fc-col-header-cell {
+  background: var(--calendar-day-cell-bg) !important;
+}
+
+.booking-calendar-wrap .fc-col-header-cell-cushion {
+  color: var(--calendar-day-number-color) !important;
+  font-weight: 700 !important;
+}
 
 .booking-calendar-wrap .fc-col-header-cell.calendar-weekend-header .fc-col-header-cell-cushion {
-  color: #ff4d4f !important;
-  font-weight: 600;
+  color: var(--calendar-day-number-color) !important;
+  font-weight: 700 !important;
 }
 
-.booking-calendar-wrap .fc-daygrid-day.calendar-cell-today:not(.fc-day-other) {
-  background-color: var(--calendar-today-bg);
-  box-shadow: inset 0 0 0 1px rgba(22, 119, 255, 0.28);
+/* Time grid: ô trắng */
+.booking-calendar-wrap .fc-timegrid-body,
+.booking-calendar-wrap .fc-timegrid-slots,
+.booking-calendar-wrap .fc-timegrid-slot,
+.booking-calendar-wrap .fc-timegrid-slot-lane,
+.booking-calendar-wrap .fc-timegrid-col {
+  background: var(--calendar-day-cell-bg) !important;
 }
 
-.booking-calendar-wrap .fc-daygrid-day.calendar-cell-today .fc-daygrid-day-number {
-  background: var(--calendar-primary);
-  color: #fff !important;
-  border-radius: 999px;
-  min-width: 28px;
-  height: 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 6px;
-  font-weight: 700;
+.booking-calendar-wrap .fc-timegrid-axis-cushion {
+  color: var(--calendar-day-number-color) !important;
+  font-weight: 700 !important;
 }
 
 /* Pill events: light fill + left accent (Ocean / Hillside / Homestay) */
@@ -86,4 +191,72 @@ body {
   font-weight: 600 !important;
   color: var(--calendar-primary) !important;
   font-size: 12px;
+}
+
+/* Public landing — subtle entrance */
+@keyframes landingFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-card-animate {
+  animation: landingFadeUp 0.85s ease-out both;
+}
+
+/* CTA gradient + hover (Nature Healing) */
+.landing-cta {
+  background: linear-gradient(135deg, #1f4d3a 0%, #3a614e 100%);
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.landing-cta:hover {
+  filter: brightness(0.92);
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(31, 77, 58, 0.35);
+}
+
+/* De Lavie landing — type scale (Playfair / Be Vietnam Pro) */
+.type-h1 {
+  font-family: var(--font-playfair), ui-serif, Georgia, serif;
+  font-size: clamp(2.25rem, 4.5vw, 2.625rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.type-h2 {
+  font-family: var(--font-playfair), ui-serif, Georgia, serif;
+  font-size: clamp(1.75rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.type-h3 {
+  font-family: var(--font-playfair), ui-serif, Georgia, serif;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+.type-body {
+  font-family: var(--font-be-vietnam), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.625;
+}
+
+.type-small {
+  font-family: var(--font-be-vietnam), system-ui, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }

@@ -13,7 +13,8 @@ import {
 } from "@ant-design/icons";
 import { Button, Divider, Layout, Menu, message } from "antd";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { logout } from "@/lib/auth";
 import { colors } from "@/lib/theme";
 
 const { Sider } = Layout;
@@ -24,14 +25,15 @@ type SidebarProps = {
 };
 
 export default function Sidebar({ collapsed, onCollapse }: SidebarProps) {
-  const pathname = usePathname() || "/";
-  const selectedKey = pathname === "/" ? "/" : pathname;
+  const pathname = usePathname() || "/dashboard";
+  const router = useRouter();
+  const selectedKey = pathname === "/dashboard" ? "/dashboard" : pathname;
 
   const items = [
     {
-      key: "/",
+      key: "/dashboard",
       icon: <DashboardOutlined />,
-      label: <Link href="/">Tổng quan</Link>,
+      label: <Link href="/dashboard">Tổng quan</Link>,
     },
     {
       key: "/calendar",
@@ -84,7 +86,7 @@ export default function Sidebar({ collapsed, onCollapse }: SidebarProps) {
         }}
       >
         <Link
-          href="/"
+          href="/dashboard"
           style={{
             display: "flex",
             alignItems: "center",
@@ -165,7 +167,10 @@ export default function Sidebar({ collapsed, onCollapse }: SidebarProps) {
             block
             danger
             icon={<LogoutOutlined />}
-            onClick={() => message.info("Đăng xuất (demo)")}
+            onClick={() => {
+              logout();
+              router.push("/");
+            }}
             style={{ justifyContent: collapsed ? "center" : "flex-start" }}
           >
             {!collapsed ? "Đăng xuất" : null}

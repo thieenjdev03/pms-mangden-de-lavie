@@ -19,6 +19,8 @@ export default function AntdAppTheme({ children }: AntdAppThemeProps) {
           colorText: colors.textPrimary,
           colorTextSecondary: colors.textSecondary,
           colorBorder: colors.border,
+          fontFamily:
+            "var(--font-be-vietnam), system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
         },
       }}
     >
