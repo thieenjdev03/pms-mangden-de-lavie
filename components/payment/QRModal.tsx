@@ -52,7 +52,20 @@ export default function QRModal({
   };
 
   return (
-    <Modal title={t.title} open={open} onCancel={onClose} footer={null} width={360}>
+    <Modal
+      title={t.title}
+      open={open}
+      onCancel={onClose}
+      footer={null}
+      centered
+      width="min(360px, calc(100vw - 24px))"
+      styles={{
+        body: {
+          maxHeight: "min(85vh, calc(100dvh - 120px))",
+          overflowY: "auto",
+        },
+      }}
+    >
       <Space direction="vertical" size="middle" style={{ width: "100%" }}>
         <Paragraph style={{ marginBottom: 0 }}>
           <Text type="secondary">{t.amount}</Text>

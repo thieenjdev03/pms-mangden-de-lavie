@@ -159,12 +159,20 @@ export default function BookingModal({
       onOk={submit}
       okText={t.save}
       destroyOnClose
-      width={480}
+      centered
+      width="min(480px, calc(100vw - 24px))"
+      styles={{
+        body: {
+          maxHeight: "min(70vh, calc(100dvh - 220px))",
+          overflowY: "auto",
+          paddingTop: 8,
+        },
+      }}
     >
       <Form
         form={form}
         layout="vertical"
-        style={{ marginTop: 16 }}
+        style={{ marginTop: 8 }}
         onValuesChange={(changed) => {
           if ("total" in changed && changed.total != null) {
             const n = Number(changed.total);

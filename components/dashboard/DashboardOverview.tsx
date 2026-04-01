@@ -17,6 +17,7 @@ import {
   Card,
   Col,
   FloatButton,
+  Grid,
   Row,
   Space,
   Table,
@@ -84,6 +85,8 @@ const statusTag = (s: MockUpcomingBooking["status"]) => {
 
 export default function DashboardOverview() {
   const router = useRouter();
+  const screens = Grid.useBreakpoint();
+  const isMobile = screens.md === false;
 
   const columns: ColumnsType<MockUpcomingBooking> = useMemo(
     () => [
@@ -315,8 +318,15 @@ export default function DashboardOverview() {
           boxShadow: "0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)",
           position: "relative",
         }}
+        styles={{
+          header: {
+            flexWrap: "wrap",
+            rowGap: 8,
+            alignItems: "flex-start",
+          },
+        }}
         extra={
-          <Space>
+          <Space wrap size="small">
             <Button size="small" type="primary">
               Hôm nay
             </Button>
@@ -329,6 +339,7 @@ export default function DashboardOverview() {
           dataSource={MOCK_UPCOMING_BOOKINGS}
           pagination={false}
           size="middle"
+          scroll={{ x: 960 }}
         />
         <div style={{ textAlign: "center", marginTop: 16 }}>
           <Link href="/bookings" style={{ color: colors.primary, fontWeight: 500 }}>
@@ -342,7 +353,10 @@ export default function DashboardOverview() {
         type="primary"
         tooltip="Đặt phòng mới"
         onClick={() => router.push("/bookings")}
-        style={{ right: 48, bottom: 48 }}
+        style={{
+          right: isMobile ? 16 : 48,
+          bottom: isMobile ? "calc(16px + env(safe-area-inset-bottom, 0px))" : 48,
+        }}
       />
     </div>
   );

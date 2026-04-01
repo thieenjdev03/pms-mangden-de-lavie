@@ -158,7 +158,7 @@ export default function CalendarPage() {
         style={{
           background: "#fff",
           borderRadius: 14,
-          padding: 24,
+          padding: "clamp(16px, 4vw, 24px)",
           boxShadow: "0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)",
         }}
       >
@@ -201,7 +201,10 @@ export default function CalendarPage() {
         type="primary"
         tooltip="Tạo đặt phòng"
         onClick={openNewBooking}
-        style={{ right: 32, bottom: 32 }}
+        style={{
+          right: 16,
+          bottom: "calc(16px + env(safe-area-inset-bottom, 0px))",
+        }}
       />
 
       <BookingModal

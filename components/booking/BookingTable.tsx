@@ -1,7 +1,7 @@
 "use client";
 
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Select, Space, Table, Tag, message } from "antd";
+import { Button, Grid, Input, Select, Space, Table, Tag, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useMemo, useState } from "react";
 import { hasRoomBookingConflict } from "@/lib/bookingConflict";
@@ -33,6 +33,8 @@ export default function BookingTable({ bookings, onRefresh }: BookingTableProps)
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<string | "all">("all");
   const [modalOpen, setModalOpen] = useState(false);
+  const screens = Grid.useBreakpoint();
+  const isMobile = screens.md === false;
 
   const data: Row[] = useMemo(() => {
     return bookings.map((b) => {
@@ -99,19 +101,24 @@ export default function BookingTable({ bookings, onRefresh }: BookingTableProps)
 
   return (
     <>
-      <Space wrap style={{ marginBottom: 16 }} size="middle">
+      <Space
+        direction={isMobile ? "vertical" : "horizontal"}
+        wrap
+        style={{ marginBottom: 16, width: "100%" }}
+        size="middle"
+      >
         <Input
           allowClear
           placeholder="Tìm khách, SĐT, phòng"
           prefix={<SearchOutlined />}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ width: 280 }}
+          style={{ width: isMobile ? "100%" : 280, maxWidth: "100%" }}
         />
         <Select
           value={status}
           onChange={setStatus}
-          style={{ width: 180 }}
+          style={{ width: isMobile ? "100%" : 180, maxWidth: "100%" }}
           options={[
             { value: "all", label: "Mọi trạng thái" },
             { value: "confirmed", label: "Đã xác nhận" },
@@ -119,7 +126,12 @@ export default function BookingTable({ bookings, onRefresh }: BookingTableProps)
             { value: "cancelled", label: "Đã hủy" },
           ]}
         />
-        <Button type="primary" icon={<PlusOutlined />} onClick={() => setModalOpen(true)}>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => setModalOpen(true)}
+          block={isMobile}
+        >
           Đặt phòng mới
         </Button>
       </Space>
@@ -127,7 +139,10 @@ export default function BookingTable({ bookings, onRefresh }: BookingTableProps)
         rowKey="id"
         columns={columns}
         dataSource={filtered}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{
+          pageSize: 10,
+          showSizeChanger: !isMobile,
+        }}
         scroll={{ x: 900 }}
       />
       <BookingModal

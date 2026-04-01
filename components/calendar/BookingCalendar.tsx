@@ -6,7 +6,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import FullCalendar from "@fullcalendar/react";
-import { Tooltip } from "antd";
+import { Grid, Tooltip } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useRef } from "react";
 import type { Booking } from "@/lib/data";
@@ -66,6 +66,15 @@ export default function BookingCalendar({
   const calRef = useRef<FullCalendar>(null);
   const events = useMemo(() => mapBookingsToEvents(bookings), [bookings]);
   const todayStr = dayjs().format("YYYY-MM-DD");
+  const screens = Grid.useBreakpoint();
+  const isMobile = screens.md === false;
+
+  const contentHeight = useMemo(() => {
+    if (isMobile) {
+      return calendarView === "dayGridMonth" ? 440 : 400;
+    }
+    return calendarView === "dayGridMonth" ? 580 : 520;
+  }, [isMobile, calendarView]);
 
   useEffect(() => {
     const api = calRef.current?.getApi();
@@ -97,7 +106,7 @@ export default function BookingCalendar({
             day: "Ngày",
           }}
           height="auto"
-          contentHeight={calendarView === "dayGridMonth" ? 580 : 520}
+          contentHeight={contentHeight}
           selectable
           selectMirror
           editable

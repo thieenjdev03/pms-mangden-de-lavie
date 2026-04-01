@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, Button, Card, Col, Input, Row, Space, Typography, message } from "antd";
+import { Avatar, Button, Card, Col, Grid, Input, Row, Space, Typography, message } from "antd";
 import { useCallback, useMemo, useState } from "react";
 import type { CustomerRow, CustomerStatus } from "@/lib/customers";
 import { INITIAL_CUSTOMERS } from "@/lib/customers";
@@ -46,6 +46,8 @@ export default function CustomerPage() {
   const [customers, setCustomers] = useState<CustomerRow[]>(INITIAL_CUSTOMERS);
   const [search, setSearch] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const screens = Grid.useBreakpoint();
+  const isMobile = screens.md === false;
   const [modalMode, setModalMode] = useState<"add" | "edit">("add");
   const [editing, setEditing] = useState<CustomerRow | null>(null);
 
@@ -149,20 +151,27 @@ export default function CustomerPage() {
           boxShadow: "0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)",
           marginBottom: 24,
         }}
-        styles={{ body: { padding: 24 } }}
+        styles={{ body: { padding: "clamp(16px, 4vw, 24px)" } }}
       >
         <Space direction="vertical" size={16} style={{ width: "100%" }}>
-          <Space wrap style={{ width: "100%", justifyContent: "space-between" }}>
+          <Space
+            direction={isMobile ? "vertical" : "horizontal"}
+            wrap
+            style={{ width: "100%", justifyContent: isMobile ? "stretch" : "space-between" }}
+            size="middle"
+          >
             <Input.Search
               placeholder="Tìm tên, số điện thoại..."
               allowClear
-              style={{ maxWidth: 360 }}
+              style={{ maxWidth: isMobile ? "100%" : 360, width: "100%" }}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <Space wrap>
-              <Button onClick={handleExport}>Xuất báo cáo</Button>
-              <Button type="primary" onClick={openAdd}>
+            <Space wrap style={isMobile ? { width: "100%" } : undefined}>
+              <Button onClick={handleExport} block={isMobile}>
+                Xuất báo cáo
+              </Button>
+              <Button type="primary" onClick={openAdd} block={isMobile}>
                 Thêm khách hàng
               </Button>
             </Space>

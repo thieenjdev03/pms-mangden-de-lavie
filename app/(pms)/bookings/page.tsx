@@ -37,7 +37,7 @@ export default function BookingsPage() {
           borderRadius: 14,
           boxShadow: "0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)",
         }}
-        styles={{ body: { padding: 24 } }}
+        styles={{ body: { padding: "clamp(16px, 4vw, 24px)" } }}
       >
         <Title level={4} style={{ marginTop: 0 }}>
           Danh sách đặt phòng

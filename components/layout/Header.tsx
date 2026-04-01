@@ -1,7 +1,24 @@
 "use client";
 
-import { BellOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Button, Input, Layout, Segmented, Space, Typography, message } from "antd";
+import {
+  BellOutlined,
+  HomeOutlined,
+  MenuOutlined,
+  SearchOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Input,
+  Layout,
+  Select,
+  Segmented,
+  Space,
+  Typography,
+  message,
+} from "antd";
 import { useState } from "react";
 import { colors } from "@/lib/theme";
 
@@ -10,8 +27,83 @@ const { Text } = Typography;
 
 type HeaderPeriod = "today" | "month" | "cleaning";
 
-export default function Header() {
+const periodOptions: { label: string; value: HeaderPeriod }[] = [
+  { label: "Hôm nay", value: "today" },
+  { label: "Tháng này", value: "month" },
+  { label: "Chờ dọn dẹp", value: "cleaning" },
+];
+
+export type HeaderProps = {
+  isMobile?: boolean;
+  onOpenMobileNav?: () => void;
+};
+
+export default function Header({ isMobile = false, onOpenMobileNav }: HeaderProps) {
   const [period, setPeriod] = useState<HeaderPeriod>("today");
+
+  if (isMobile) {
+    return (
+      <AntHeader
+        style={{
+          padding: "10px 12px",
+          background: "#fff",
+          borderBottom: `1px solid ${colors.border}`,
+          height: "auto",
+          minHeight: 56,
+          lineHeight: "normal",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            marginBottom: 10,
+          }}
+        >
+          <Button
+            type="text"
+            icon={<MenuOutlined style={{ fontSize: 20 }} />}
+            onClick={() => onOpenMobileNav?.()}
+            aria-label="Mở menu"
+            style={{ flexShrink: 0, width: 40, height: 40 }}
+          />
+          <Select<HeaderPeriod>
+            value={period}
+            onChange={setPeriod}
+            options={periodOptions}
+            style={{ flex: 1, minWidth: 0 }}
+            popupMatchSelectWidth={false}
+          />
+          <Button
+            type="primary"
+            size="small"
+            icon={<HomeOutlined />}
+            style={{ borderRadius: 8, flexShrink: 0 }}
+            onClick={() => message.info("Thêm Villa (demo)")}
+            aria-label="Thêm Villa"
+          />
+          <Badge dot color={colors.tertiary}>
+            <BellOutlined style={{ fontSize: 20, color: colors.textSecondary, cursor: "pointer" }} />
+          </Badge>
+          <Avatar
+            size={36}
+            icon={<UserOutlined />}
+            style={{ flexShrink: 0, backgroundColor: colors.secondary }}
+          />
+        </div>
+        <Input
+          allowClear
+          placeholder="Tìm kiếm booking, khách hàng…"
+          prefix={<SearchOutlined style={{ color: colors.textSecondary }} />}
+          style={{
+            width: "100%",
+            borderRadius: 10,
+          }}
+        />
+      </AntHeader>
+    );
+  }
 
   return (
     <AntHeader
@@ -42,11 +134,7 @@ export default function Header() {
         <Segmented<HeaderPeriod>
           value={period}
           onChange={setPeriod}
-          options={[
-            { label: "Hôm nay", value: "today" },
-            { label: "Tháng này", value: "month" },
-            { label: "Chờ dọn dẹp", value: "cleaning" },
-          ]}
+          options={periodOptions}
         />
       </Space>
 

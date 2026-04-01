@@ -69,8 +69,15 @@ export default function CustomerModal({
       okText="Lưu"
       cancelText="Hủy"
       destroyOnClose
-      width={480}
-      styles={{ body: { paddingTop: 16 } }}
+      centered
+      width="min(480px, calc(100vw - 24px))"
+      styles={{
+        body: {
+          maxHeight: "min(70vh, calc(100dvh - 220px))",
+          overflowY: "auto",
+          paddingTop: 16,
+        },
+      }}
     >
       <Form form={form} layout="vertical" requiredMark="optional">
         <Form.Item
