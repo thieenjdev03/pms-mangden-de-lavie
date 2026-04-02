@@ -125,7 +125,7 @@ MacOS
 npm run dev
 Windows
 npm run dev
-
+p
 👉 mở:
 
 http://localhost:3000

@@ -19,8 +19,8 @@ export function SiteFooter() {
             </p>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <Link href="/" className="text-heal-text-secondary hover:text-heal-accent">
-                  Trang chủ
+                <Link href="/preview" className="text-heal-text-secondary hover:text-heal-accent">
+                  Trang giới thiệu
                 </Link>
               </li>
               <li>
