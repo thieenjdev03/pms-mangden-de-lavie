@@ -72,11 +72,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
       </CardContent>
       <CardFooter className="mt-auto flex flex-col gap-2 border-t border-heal-primary-100/80 bg-heal-primary-50/30 pt-4 sm:flex-row">
         <Button asChild variant="default" className="w-full sm:flex-1">
-          <Link href={`/properties/${property.slug}#loai-phong`}>Xem villa và loại phòng</Link>
+          <Link href={`/properties/${property.slug}#loai-phong`}>Xem Chi Tiết</Link>
         </Button>
         <Button asChild variant="secondary" className="w-full sm:flex-1">
           <Link href={landingLinks.zalo} target="_blank" rel="noopener noreferrer">
-            Liên hệ đặt phòng
+            Đặt Phòng
           </Link>
         </Button>
       </CardFooter>
